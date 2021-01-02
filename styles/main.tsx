@@ -73,26 +73,3 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 });
-
-export const StyleMap = (style) => {
-  switch (style) {
-    case "h1":
-      return styles.h1;
-    case "h2":
-      return styles.h2;
-    case "h3":
-      return styles.h3;
-    case "h4":
-      return styles.h4;
-    case "h5":
-      return styles.h5;
-    case "body":
-      return styles.body;
-    case "title":
-      return styles.title;
-    case "subtitle":
-      return styles.subtitle;
-    case "footer":
-      return styles.footer;
-  }
-};
