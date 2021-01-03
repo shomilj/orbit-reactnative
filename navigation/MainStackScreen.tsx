@@ -16,7 +16,7 @@ export const MainStackScreen = () => {
       <MainStack.Screen
         name="DetailScreen"
         component={DetailScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerBackTitle: "Back", headerTitle: "" }}
       />
     </MainStack.Navigator>
   );

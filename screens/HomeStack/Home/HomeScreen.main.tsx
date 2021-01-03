@@ -17,7 +17,6 @@ const CellView = ({ header, rows }: any, navigation: any) => {
   const components = [];
   components.push(<Text style={styles.header}>{header}</Text>);
   rows.forEach((row: any) => {
-    console.log(row);
     switch (row.type) {
       case "TEXT":
         components.push(TextRow(row.data));
@@ -47,9 +46,9 @@ const handleAction = (actionType: any, actionContent: any, navigation: any) => {
       break;
     case "DETAIL":
       navigation.navigate("DetailScreen", {
-        actionType: actionType,
-        actionContent: actionContent,
+        nodeId: actionContent,
       });
+      break;
   }
 };
 
