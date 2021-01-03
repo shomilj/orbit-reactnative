@@ -15,13 +15,10 @@ interface RowModel {
   data: any;
 }
 
-interface RowInput {
-  type: string;
-  data: RowModel[];
-}
+export type TableDataType = RowModel[];
 
-export const TableFeature = (data: RowInput, navigation: any) => {
-  const renderItem = ({ item, index }) => {
+export const TableFeature = (data: TableDataType, navigation: any) => {
+  const renderItem = ({ item, index }: any) => {
     var cell = CellView(item, navigation);
     if (item.actionType) {
       // This cell has something underneath it
@@ -45,7 +42,7 @@ export const TableFeature = (data: RowInput, navigation: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: THEME_LIGHT }}>
       <FlatList
-        data={data.rows}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(_, index) => "key-" + index}
       />

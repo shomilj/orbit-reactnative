@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,12 +14,9 @@ interface MapLocation {
   color: string;
 }
 
-interface MapDetailType {
-  type: string;
-  locations: MapLocation[];
-}
+export type MapDataType = MapLocation[];
 
-const getIonicon = (icon, color) => {
+const getIonicon = (icon: any, color: string) => {
   return (
     <View style={{ borderRadius: 100, backgroundColor: color }}>
       <Ionicons name={icon} size={15} style={{ margin: 5 }} color={"white"} />
@@ -27,7 +24,29 @@ const getIonicon = (icon, color) => {
   );
 };
 
-export const MapFeature = (data: MapDetailType) => {
+export const MapFeature = (data: MapDataType) => {
+  const mapRef = useRef(null);
+
+  const markers = data.map((location, index) => (
+    <Marker
+      key={index}
+      coordinate={{
+        latitude: location.latitude,
+        longitude: location.longitude,
+      }}
+      title={location.title}
+      description={location.subtitle}
+      pinColor={location.color}
+    >
+      {getIonicon(location.icon, location.color)}
+    </Marker>
+  ));
+
+  // This may or may not work.
+  // useEffect(() => {
+  //   mapRef.fitToSuppliedMarkers(markers, false);
+  // }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <MapView
@@ -41,21 +60,9 @@ export const MapFeature = (data: MapDetailType) => {
           width: "100%",
           height: "100%",
         }}
+        ref={mapRef}
       >
-        {data.locations.map((location, index) => (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            title={location.title}
-            description={location.subtitle}
-            pinColor={location.color}
-          >
-            {getIonicon(location.icon, location.color)}
-          </Marker>
-        ))}
+        {markers}
       </MapView>
     </SafeAreaView>
   );

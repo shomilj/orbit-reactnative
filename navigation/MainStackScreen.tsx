@@ -3,7 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../screens/HomeStack/Home/HomeScreen.main";
 import { DetailScreen } from "../screens/HomeStack/Detail/DetailScreen";
 
-const MainStack = createStackNavigator();
+export type MainStackParamList = {
+  HomeScreen: undefined;
+  DetailScreen: { nodeId: string };
+};
+
+const MainStack = createStackNavigator<MainStackParamList>();
 
 export const MainStackScreen = () => {
   return (
@@ -16,7 +21,11 @@ export const MainStackScreen = () => {
       <MainStack.Screen
         name="DetailScreen"
         component={DetailScreen}
-        options={{ headerShown: true, headerBackTitle: "Back", headerTitle: "" }}
+        options={{
+          headerShown: true,
+          headerBackTitle: "Back",
+          headerTitle: "",
+        }}
       />
     </MainStack.Navigator>
   );

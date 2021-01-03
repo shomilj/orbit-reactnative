@@ -1,12 +1,15 @@
 import { WebBrowser } from "expo";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../screens/HomeStack/Home/HomeScreen.styles";
 import { THEME_WHITE } from "../styles/main";
 import { ButtonRow } from "./rows/ButtonRow";
 import { TextRow } from "./rows/TextRow";
 
-export const CellView = ({ header, rows }: any, navigation: any) => {
+export const CellView = (
+  { header, rows, actionType, actionContent }: any,
+  navigation: any
+) => {
   const components = [];
   if (header) {
     components.push(<Text style={styles.header}>{header}</Text>);
@@ -21,17 +24,34 @@ export const CellView = ({ header, rows }: any, navigation: any) => {
         break;
     }
   });
-  return (
+  const cell = (
     <View
       style={{
         ...styles.cell,
         paddingVertical: 6,
         backgroundColor: THEME_WHITE,
       }}
+      key={header}
     >
       {components}
     </View>
   );
+
+  if (actionType) {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          handleAction(actionType, actionContent, navigation);
+        }}
+        key={header}
+      >
+        {cell}
+      </TouchableOpacity>
+    );
+  } else {
+    return cell;
+  }
 };
 
 export const handleAction = (
