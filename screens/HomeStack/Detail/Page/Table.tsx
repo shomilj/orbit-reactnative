@@ -10,8 +10,8 @@ export enum RowType {
   Button = "BUTTON",
 }
 
-interface RowModel {
-  type: string;
+export interface RowModel {
+  type: RowType;
   data: any;
 }
 

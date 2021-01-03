@@ -3,8 +3,8 @@ import "firebase/firestore";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { styles, THEME_DARK, THEME_LIGHT } from "../../../styles/main";
-import { MapDataType, MapFeature } from "./Feature/Map";
-import { TableDataType, TableFeature } from "./Feature/Table";
+import { MapDataType, MapFeature } from "./Page/Map";
+import { TableDataType, TableFeature } from "./Page/Table";
 
 enum PageType {
   Map = "MAP",
