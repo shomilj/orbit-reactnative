@@ -3,54 +3,12 @@ import { View, Text, FlatList, SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { SAMPLE_DATA } from "./HomeScreen.constants";
-import * as WebBrowser from "expo-web-browser";
 
 import { styles } from "./HomeScreen.styles";
 import { Ionicons } from "@expo/vector-icons";
 
-import { TextRow } from "../../../components/rows/TextRow";
-import { ButtonRow } from "../../../components/rows/ButtonRow";
-import { THEME_DARK, THEME_LIGHT, THEME_WHITE } from "../../../styles/main";
-import { NavigationProp } from "@react-navigation/native";
-
-const CellView = ({ header, rows }: any, navigation: any) => {
-  const components = [];
-  components.push(<Text style={styles.header}>{header}</Text>);
-  rows.forEach((row: any) => {
-    switch (row.type) {
-      case "TEXT":
-        components.push(TextRow(row.data));
-        break;
-      case "BUTTON":
-        components.push(ButtonRow(row.data, handleAction, navigation));
-        break;
-    }
-  });
-  return (
-    <View
-      style={{
-        ...styles.cell,
-        paddingVertical: 6,
-        backgroundColor: THEME_WHITE,
-      }}
-    >
-      {components}
-    </View>
-  );
-};
-
-const handleAction = (actionType: any, actionContent: any, navigation: any) => {
-  switch (actionType) {
-    case "WEB":
-      WebBrowser.openBrowserAsync(actionContent);
-      break;
-    case "DETAIL":
-      navigation.navigate("DetailScreen", {
-        nodeId: actionContent,
-      });
-      break;
-  }
-};
+import { THEME_DARK, THEME_LIGHT } from "../../../styles/main";
+import { CellView, handleAction } from "../../../components/CellView";
 
 const AppBar = ({ navigation }: any) => {
   return (

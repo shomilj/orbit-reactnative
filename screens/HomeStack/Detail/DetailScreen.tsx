@@ -1,74 +1,24 @@
 import firebase from "firebase";
 import "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
-import { styles } from "../../../styles/main";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Button, Text, View } from "react-native";
+import { styles, THEME_DARK, THEME_LIGHT } from "../../../styles/main";
+import { MapFeature } from "./Feature/Map";
+import { TableFeature } from "./Feature/Table";
 
-import MapView, { AnimatedRegion, Marker } from "react-native-maps";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-interface MapLocation {
-  title: string;
-  subtitle: string;
-  latitude: number;
-  longitude: number;
-  icon: string;
-  color: string;
-}
-
-interface MapDetailType {
-  type: string;
-  locations: MapLocation[];
-}
-
-const getIonicon = (icon, color) => {
-  return (
-    <View style={{ borderRadius: 100, backgroundColor: color }}>
-      <Ionicons name={icon} size={15} style={{margin: 5}} color={"white"} />
-    </View>
-  );
-};
-
-const MapDetail = (data: MapDetailType) => {
-  return (
-    <View style={styles.container}>
-      <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        {data.locations.map((location, index) => (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            title={location.title}
-            description={location.subtitle}
-            pinColor={location.color}
-          >
-            {getIonicon(location.icon, location.color)}
-          </Marker>
-        ))}
-      </MapView>
-    </View>
-  );
-};
-
-export const DetailScreen = ({ route }: any) => {
+export const DetailScreen = ({ route, navigation }: any) => {
   const { nodeId } = route.params;
   // Fetch the data from nodeId and render accordingly.
   const [data, setData] = useState({});
   const [error, setError] = useState("");
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTintColor: THEME_DARK,
+      headerTitleStyle: { fontFamily: "Avenir", color: THEME_DARK },
+      headerStyle: { backgroundColor: THEME_LIGHT },
+    });
+  }, [navigation]);
+
   useEffect(() => {
     const unsubscribe = firebase
       .firestore()
@@ -96,7 +46,9 @@ export const DetailScreen = ({ route }: any) => {
   } else {
     switch (data.type) {
       case "MAP":
-        return MapDetail(data);
+        return MapFeature(data);
+      case "TABLE":
+        return TableFeature(data, navigation);
       default:
         return <View></View>;
     }

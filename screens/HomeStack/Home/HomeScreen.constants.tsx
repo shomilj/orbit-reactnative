@@ -71,7 +71,7 @@ export const SAMPLE_DATA = [
       },
     ],
     actionType: "DETAIL",
-    actionContent: "758ce1c804c9145b16b798d9d660b21fdd6051c3",
+    actionContent: "d7d4ee79254bf138f351aa23e60e5cd4ef3713c1",
   },
   {
     id: "1",
