@@ -1,6 +1,5 @@
 import firebase from "firebase";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { AuthStackScreen } from "./AuthStackScreen";
 import { RootStackScreen } from "./RootStackScreen";

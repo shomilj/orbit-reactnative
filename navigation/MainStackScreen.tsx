@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../screens/HomeStack/Home/HomeScreen.main";
 import { DetailScreen } from "../screens/HomeStack/Detail/DetailScreen";

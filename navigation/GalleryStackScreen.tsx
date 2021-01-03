@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { GalleryScreen } from "../screens/GalleryStack/Gallery/GalleryScreen.main";
 import { FeatureScreen } from "../screens/GalleryStack/Feature/FeatureScreen";

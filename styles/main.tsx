@@ -1,5 +1,11 @@
 import { StatusBar, StyleSheet } from "react-native";
 
+export const THEME_GRAY = "#778DA9";
+export const THEME_DARK = "#01497C";
+export const THEME_DARK_TEXT = "#192841";
+export const THEME_LIGHT = "#f7f7f7";
+export const THEME_WHITE = "#FFFFFF";
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,

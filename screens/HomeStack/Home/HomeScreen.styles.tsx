@@ -1,6 +1,5 @@
 import { StatusBar, StyleSheet } from "react-native";
-
-export const DARK_BLUE_COLOR = "#303952";
+import { THEME_DARK_TEXT, THEME_GRAY } from "../../../styles/main";
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,7 +10,7 @@ export const styles = StyleSheet.create({
   cell: {
     marginVertical: 10,
     marginHorizontal: 20,
-    borderRadius: 14,
+    borderRadius: 8,
   },
   title: {
     fontSize: 50,
@@ -19,22 +18,22 @@ export const styles = StyleSheet.create({
     fontWeight: "400",
     marginVertical: 2,
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   h1: {
     fontSize: 40,
     fontFamily: "Avenir",
     marginVertical: 2,
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   h2: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Avenir",
     fontWeight: "600",
     marginVertical: 2,
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   h3: {
     fontSize: 16,
@@ -42,7 +41,7 @@ export const styles = StyleSheet.create({
     fontWeight: "800",
     marginVertical: 2,
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   h4: {
     fontSize: 14,
@@ -50,29 +49,33 @@ export const styles = StyleSheet.create({
     marginVertical: 2,
     fontWeight: "800",
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   body: {
     fontSize: 15,
     fontFamily: "Avenir",
     marginVertical: 2,
     marginHorizontal: 20,
-    color: DARK_BLUE_COLOR,
+    color: THEME_DARK_TEXT,
   },
   header: {
     fontSize: 12,
     fontFamily: "Avenir",
-    color: "gray",
+    color: THEME_GRAY,
+    fontWeight: "100",
+    textDecorationColor: THEME_GRAY,
+    textDecorationStyle: "solid",
     marginTop: 8,
-    marginBottom: 4,
+    marginBottom: 8,
     marginHorizontal: 20,
   },
   footer: {
     fontSize: 12,
     fontFamily: "Avenir",
-    color: "gray",
     marginVertical: 4,
     marginHorizontal: 20,
+    marginTop: 10,
+    color: THEME_GRAY,
   },
 });
 
