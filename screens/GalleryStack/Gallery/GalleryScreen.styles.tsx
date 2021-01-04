@@ -86,6 +86,8 @@ export const StyleMap = (style) => {
       return styles.h4;
     case "h5":
       return styles.h5;
+    case "h6":
+      return styles.h6;
     case "body":
       return styles.body;
     case "title":

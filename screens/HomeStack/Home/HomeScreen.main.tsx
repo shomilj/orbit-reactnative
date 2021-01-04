@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, SafeAreaView } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
-import { SAMPLE_DATA } from "./HomeScreen.constants";
+import { FlatList, SafeAreaView } from "react-native";
 
 import { styles } from "./HomeScreen.styles";
 import { THEME_LIGHT } from "../../../styles/main";
@@ -13,7 +10,7 @@ import { AppBar } from "./AppBar";
 import { NameCell } from "./NameCell";
 
 import firebase from "firebase";
-import { RowModel, RowType } from "../Detail/Page/Table";
+import { RowModel } from "../Detail/Page/Table";
 
 interface UserObjectType {
   first: string;
@@ -28,6 +25,7 @@ export interface CellDataType {
   data: RowModel[];
   expires: number;
   header: string;
+  sortIndex?: number;
   params?: any;
   actionType?: any;
   actionContent?: any;
@@ -37,9 +35,7 @@ export const HomeScreen = ({ navigation }: any) => {
   const [userObject, setUserObject] = useState<UserObjectType | undefined>(
     undefined
   );
-  const [cells, setCells] = useState<{ number: CellDataType } | undefined>(
-    undefined
-  );
+  const [cells, setCells] = useState<CellDataType[]>([]);
 
   var user = firebase.auth().currentUser;
 
@@ -66,16 +62,19 @@ export const HomeScreen = ({ navigation }: any) => {
     // If the user object updates, then activate the cellular listeners.
     if (userObject) {
       const unsubscribers: { (): void }[] = [];
+      setCells([]);
       for (const [cellId, sortOrder] of Object.entries(userObject.cells)) {
-        console.log(`${cellId}: ${sortOrder}`);
         const unsubscribe = firebase
           .firestore()
           .collection("cells")
           .doc(cellId)
           .onSnapshot((doc) => {
+            console.log("Cell updated:", cellId);
             const cellData = doc.data();
             if (cellData) {
-              setCells({ ...cells, [sortOrder as number]: cellData });
+              const cell = cellData as CellDataType;
+              cell.sortIndex = sortOrder as number;
+              setCells((cells) => [...cells, cell]);
             } else {
               console.log("Unable to get cell data for cell", cellId);
             }
@@ -101,14 +100,12 @@ export const HomeScreen = ({ navigation }: any) => {
     }
   };
 
-  const tableData = [];
+  var tableData = [];
   tableData.push({});
   if (cells) {
-    const cellKeys = Object.keys(cells);
-    cellKeys.sort();
-    cellKeys.forEach((key) => {
-      var index = parseInt(key);
-      const cell = cells[index];
+    var sortedCells = [...cells];
+    sortedCells.sort();
+    sortedCells.forEach((cell) => {
       if (cell) {
         tableData.push(cell);
       } else {

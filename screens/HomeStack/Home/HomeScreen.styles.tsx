@@ -51,9 +51,26 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
     color: THEME_DARK_TEXT,
   },
+  h5: {
+    fontSize: 14,
+    fontFamily: "Avenir",
+    marginVertical: 2,
+    fontWeight: "800",
+    marginHorizontal: 20,
+    color: THEME_GRAY,
+  },
+  h6: {
+    fontSize: 14,
+    fontFamily: "Avenir",
+    marginVertical: 2,
+    fontWeight: "800",
+    marginHorizontal: 20,
+    color: THEME_DARK_TEXT,
+  },
   body: {
     fontSize: 15,
     fontFamily: "Avenir",
+    fontWeight: "500",
     marginVertical: 2,
     marginHorizontal: 20,
     color: THEME_DARK_TEXT,
@@ -91,12 +108,14 @@ export const StyleMap = (style) => {
       return styles.h4;
     case "h5":
       return styles.h5;
+    case "h6":
+      return styles.h6;
     case "body":
       return styles.body;
     case "title":
       return styles.title;
-    case "subtitle":
-      return styles.subtitle;
+    case "header":
+      return styles.header;
     case "footer":
       return styles.footer;
   }

@@ -1,9 +1,48 @@
 export const SAMPLE_DATA = [
-  { id: "0", name: "Shomil" },
+  {},
+  {
+    id: "6",
+    header: "TEST CELL",
+    data: [
+      {
+        type: "TEXT",
+        data: { content: "Header 1", style: "h1" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Header 2", style: "h2" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Header 3", style: "h3" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Header 4", style: "h4" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Header 5", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Body", style: "body" },
+      },
+
+      {
+        type: "TEXT",
+        data: { content: "Header", style: "header" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Footer", style: "footer" },
+      },
+    ],
+  },
   {
     id: "5",
     header: "UC BERKELEY COVID CASES",
-    rows: [
+    data: [
       {
         type: "TEXT",
         data: {
@@ -40,7 +79,7 @@ export const SAMPLE_DATA = [
   {
     id: "2",
     header: "CRIME AT UC BERKELEY",
-    rows: [
+    data: [
       {
         type: "TEXT",
         data: {
@@ -76,7 +115,7 @@ export const SAMPLE_DATA = [
   {
     id: "1",
     header: "SPRING BREAK COUNTDOWN",
-    rows: [
+    data: [
       {
         type: "TEXT",
         data: {
@@ -89,7 +128,7 @@ export const SAMPLE_DATA = [
   {
     id: "4",
     header: "CAFE 3 MENU - BREAKFAST (10/11)",
-    rows: [
+    data: [
       {
         type: "TEXT",
         data: {

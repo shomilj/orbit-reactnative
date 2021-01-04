@@ -22,18 +22,20 @@ export const CellView = (
   if (cell.header) {
     components.push(<Text style={styles.header}>{cell.header}</Text>);
   }
-  cell.data.forEach((row: RowDataType) => {
-    switch (row.type) {
-      case RowType.Text:
-        components.push(TextRow(row.data));
-        break;
-      case RowType.Button:
-        components.push(
-          ButtonRow(row.data as ButtonRowDataType, handleAction, navigation)
-        );
-        break;
-    }
-  });
+  if (cell.data) {
+    cell.data.forEach((row: RowDataType) => {
+      switch (row.type) {
+        case RowType.Text:
+          components.push(TextRow(row.data));
+          break;
+        case RowType.Button:
+          components.push(
+            ButtonRow(row.data as ButtonRowDataType, handleAction, navigation)
+          );
+          break;
+      }
+    });
+  }
   const cellView = (
     <View
       style={{

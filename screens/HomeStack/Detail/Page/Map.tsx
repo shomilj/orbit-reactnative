@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
-import { styles } from "../../../../styles/main";
 
 interface MapLocation {
   title: string;
@@ -25,8 +23,6 @@ const getIonicon = (icon: any, color: string) => {
 };
 
 export const MapFeature = (data: MapDataType) => {
-  const mapRef = useRef(null);
-
   const markers = data.map((location, index) => (
     <Marker
       key={index}
@@ -42,13 +38,8 @@ export const MapFeature = (data: MapDataType) => {
     </Marker>
   ));
 
-  // This may or may not work.
-  // useEffect(() => {
-  //   mapRef.fitToSuppliedMarkers(markers, false);
-  // }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={{ flex: 1 }}>
       <MapView
         initialRegion={{
           latitude: 37.78825,
@@ -60,10 +51,9 @@ export const MapFeature = (data: MapDataType) => {
           width: "100%",
           height: "100%",
         }}
-        ref={mapRef}
       >
         {markers}
       </MapView>
-    </SafeAreaView>
+    </View>
   );
 };
