@@ -11,6 +11,7 @@ import { NameCell } from "./NameCell";
 
 import firebase from "firebase";
 import { RowModel } from "../Detail/Page/Table";
+import { SAMPLE_DATA } from "./HomeScreen.constants";
 
 interface UserObjectType {
   first: string;
@@ -31,6 +32,8 @@ export interface CellDataType {
   actionContent?: any;
 }
 
+const USE_SAMPLE_DATA = false;
+
 export const HomeScreen = ({ navigation }: any) => {
   const [userObject, setUserObject] = useState<UserObjectType | undefined>(
     undefined
@@ -40,7 +43,7 @@ export const HomeScreen = ({ navigation }: any) => {
   var user = firebase.auth().currentUser;
 
   useEffect(() => {
-    if (user) {
+    if (user && !USE_SAMPLE_DATA) {
       console.log("Observing data for user:", user.uid);
       const unsubscribe = firebase
         .firestore()
@@ -60,7 +63,7 @@ export const HomeScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     // If the user object updates, then activate the cellular listeners.
-    if (userObject) {
+    if (userObject && !USE_SAMPLE_DATA) {
       const unsubscribers: { (): void }[] = [];
       setCells([]);
       for (const [cellId, sortOrder] of Object.entries(userObject.cells)) {
@@ -112,6 +115,10 @@ export const HomeScreen = ({ navigation }: any) => {
         console.log("other error");
       }
     });
+  }
+
+  if (USE_SAMPLE_DATA) {
+    tableData = SAMPLE_DATA;
   }
 
   return (

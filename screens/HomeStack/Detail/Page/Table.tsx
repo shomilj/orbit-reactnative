@@ -42,6 +42,7 @@ export const TableFeature = (data: TableDataType, navigation: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: THEME_LIGHT }}>
       <FlatList
+        scrollIndicatorInsets={{ right: 1 }}
         data={data}
         renderItem={renderItem}
         keyExtractor={(_, index) => "key-" + index}

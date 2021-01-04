@@ -1,44 +1,45 @@
 export const SAMPLE_DATA = [
   {},
-  {
-    id: "6",
-    header: "TEST CELL",
-    data: [
-      {
-        type: "TEXT",
-        data: { content: "Header 1", style: "h1" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Header 2", style: "h2" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Header 3", style: "h3" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Header 4", style: "h4" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Header 5", style: "h5" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Body", style: "body" },
-      },
+  // {
+  //   id: "6",
+  //   header: "TEST CELL",
+  //   data: [
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header 1", style: "h1" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header 2", style: "h2" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header 3", style: "h3" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header 4", style: "h4" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header 5", style: "h5" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Body", style: "body" },
+  //     },
 
-      {
-        type: "TEXT",
-        data: { content: "Header", style: "header" },
-      },
-      {
-        type: "TEXT",
-        data: { content: "Footer", style: "footer" },
-      },
-    ],
-  },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Header", style: "header" },
+  //     },
+  //     {
+  //       type: "TEXT",
+  //       data: { content: "Footer", style: "footer" },
+  //     },
+  //   ],
+  // },
+
   {
     id: "5",
     header: "UC BERKELEY COVID CASES",
@@ -77,6 +78,115 @@ export const SAMPLE_DATA = [
     ],
   },
   {
+    id: "5",
+    header: "Trending on r/Berkeley",
+    data: [
+      {
+        type: "TEXT",
+        data: { content: "Posted by u/lpaiasdis 5 hours ago", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: {
+          content:
+            "What unique opportunities did you have from attending Berkeley?",
+          style: "body",
+        },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Posted by u/capitan 57 minutes ago", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: {
+          content:
+            "Difficulty connecting to Emotional Therapy: An EECS Perspective",
+          style: "body",
+        },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Posted by u/bleeeeeep 5 hours ago", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Date ideas", style: "body" },
+      },
+      {
+        type: "BUTTON",
+        data: {
+          title: "READ MORE ON REDDIT",
+          actionType: "WEB",
+          actionContent: "https://www.reddit.com/r/berkeley/",
+        },
+      },
+    ],
+  },
+  {
+    id: "5",
+    header: "Upcoming Games (Men's Basketball)",
+    data: [
+      {
+        type: "TEXT",
+        data: { content: "Thursday, January 1 at 12:00 PM", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "California at UCLA", style: "body" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Thursday, January 1 at 12:00 PM", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Stanford", style: "body" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "Thursday, January 1 at 12:00 PM", style: "h5" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "California at USC", style: "body" },
+      },
+      {
+        type: "TEXT",
+        data: { content: "View All Games →", style: "footer" },
+      },
+    ],
+  },
+  {
+    id: "5",
+    header: "The Daily Californian",
+    data: [
+      {
+        type: "TEXT",
+        data: {
+          content: "Officer-Involved Shooting occurs in Tang Center Courtyard",
+          style: "h2",
+        },
+      },
+      {
+        type: "TEXT",
+        data: {
+          content:
+            "Berkeley Police Department officers responded to a robbery report Saturday that led to an officer-involved shooting.",
+          style: "body",
+        },
+      },
+      {
+        type: "TEXT",
+        data: {
+          content: "Read more →",
+          style: "footer",
+        },
+      },
+    ],
+  },
+
+  {
     id: "2",
     header: "CRIME AT UC BERKELEY",
     data: [
@@ -99,6 +209,14 @@ export const SAMPLE_DATA = [
         data: {
           content: "8:10 PM • Man Wielding Knife at Sproul",
           style: "body",
+        },
+      },
+      {
+        type: "BUTTON",
+        data: {
+          title: "Request a BearWalk",
+          actionType: "WEB",
+          actionContent: "https://www.reddit.com/r/berkeley/",
         },
       },
       {
@@ -170,6 +288,66 @@ export const SAMPLE_DATA = [
         data: {
           content: "Oatmeal, Assorted Danishes and Scones, Oranges, Bananas",
           style: "body",
+        },
+      },
+    ],
+  },
+
+  {
+    id: "5",
+    header: "Getting Around Campus",
+    data: [
+      {
+        type: "TEXT",
+        data: {
+          content:
+            "Welcome to Berkeley! Here are some tools to help you find your way around campus.",
+          style: "h3",
+        },
+      },
+      {
+        type: "BUTTON",
+        data: {
+          title: "Campus Map",
+          actionType: "WEB",
+          actionContent: "https://www.reddit.com/r/berkeley/",
+        },
+      },
+      {
+        type: "BUTTON",
+        data: {
+          title: "Around Me",
+          actionType: "WEB",
+          actionContent: "https://www.reddit.com/r/berkeley/",
+        },
+      },
+      {
+        type: "BUTTON",
+        data: {
+          title: "Dwinelle navigator",
+          actionType: "WEB",
+          actionContent: "https://www.reddit.com/r/berkeley/",
+        },
+      },
+    ],
+  },
+
+  {
+    id: "5",
+    header: "CS 61C Office Hour Queue",
+    data: [
+      {
+        type: "TEXT",
+        data: {
+          content: "The estimated wait time is 8-12 minutes.",
+          style: "h2",
+        },
+      },
+      {
+        type: "TEXT",
+        data: {
+          content: "Join the Queue →",
+          style: "footer",
         },
       },
     ],
