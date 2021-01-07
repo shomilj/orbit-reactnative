@@ -127,7 +127,9 @@ export const HomeScreen = ({ navigation }: any) => {
       <FlatList
         data={tableData}
         renderItem={renderItem}
-        keyExtractor={(_, index) => "key-" + index}
+        keyExtractor={(_, index) => {
+          return "key-" + index;
+        }}
       />
     </SafeAreaView>
   );

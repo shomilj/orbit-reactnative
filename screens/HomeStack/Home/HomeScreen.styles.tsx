@@ -103,7 +103,7 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const StyleMap = (style) => {
+export const StyleMap = (style: string) => {
   switch (style) {
     case "h1":
       return styles.h1;

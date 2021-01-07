@@ -18,7 +18,7 @@ export const AppBar = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={0.7}
         style={{ marginTop: 10, marginRight: 20 }}
-        onPress={() => navigation.navigate("GalleryScreen")}
+        onPress={() => navigation.navigate("GalleryStackScreen")}
       >
         <Ionicons name="md-add-circle-outline" size={32} color={THEME_DARK} />
       </TouchableOpacity>

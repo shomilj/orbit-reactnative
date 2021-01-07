@@ -1,9 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CellView, handleAction } from "../../../../components/CellView";
-import { styles, THEME_LIGHT } from "../../../../styles/main";
+import { THEME_LIGHT } from "../../../../styles/main";
 
 export enum RowType {
   Text = "TEXT",

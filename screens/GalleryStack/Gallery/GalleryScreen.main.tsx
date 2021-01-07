@@ -1,74 +1,91 @@
-import React from "react";
-import { View, Text, SectionList, SafeAreaView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, SectionList, SafeAreaView, Button, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { SAMPLE_DATA } from "./GalleryScreen.constants";
 import { styles } from "./GalleryScreen.styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { CellView } from "./components/CellView";
+import { HeaderView } from "./components/HeaderView";
+import firebase from "firebase";
+import "firebase/firestore";
+import { CardType, CategoryType } from "./GalleryScreen.types";
+import PressableOpacity from "../../../components/PressableOpacity";
+import { THEME_DARK } from "../../../styles/main";
 
-type CellViewProps = {
-  onPress: any;
-  children: any;
-};
+export const GalleryScreen = ({ navigation }: any) => {
+  const [cards, setCards] = useState<CardType[] | undefined>(undefined);
 
-const CellView = ({ onPress, children }: CellViewProps) => {
-  return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
-      <View
-        style={{
-          ...styles.cell,
-          backgroundColor: "#F8F8F8",
-          paddingVertical: 6,
-          height: 70,
-          display: "flex",
-          justifyContent: "center",
+  useEffect(() => {
+    const cancelButton = (
+      <PressableOpacity
+        style={{ marginLeft: 20 }}
+        onPress={() => {
+          navigation.goBack();
         }}
       >
-        {children}
-      </View>
-    </TouchableOpacity>
-  );
-};
+        <Text style={{ fontSize: 18, fontFamily: "Avenir", color: THEME_DARK }}>
+          Cancel
+        </Text>
+      </PressableOpacity>
+    );
 
-type HeaderViewProps = {
-  title: string;
-  color: string;
-};
-const HeaderView = ({ title, color }: HeaderViewProps) => {
-  return (
-    <Text
-      style={{
-        marginLeft: 40,
-        marginTop: 30,
-        marginBottom: 10,
-        fontFamily: "Avenir",
-        fontSize: 20,
-        fontWeight: "800",
-        textDecorationLine: "underline",
-        textDecorationColor: "#192a56",
-        color: "#192a56",
-      }}
-    >
-      {title}
-    </Text>
-  );
-};
+    navigation.setOptions({
+      title: "Gallery",
+      headerLeft: () => cancelButton,
+      headerTitleStyle: { fontSize: 17, fontFamily: "Avenir" },
+    });
+  }, []);
 
-export const GalleryScreen = () => {
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection("cards")
+      .onSnapshot((querySnapshot) => {
+        const cards: CardType[] = [];
+        querySnapshot.forEach((doc) => {
+          cards.push(doc.data() as CardType);
+        });
+        setCards(cards);
+      });
+    return unsubscribe;
+  }, [setCards]);
+
+  const result = cards?.reduce((r, a) => {
+    r[a.category] = r[a.category] || [];
+    r[a.category].push(a);
+    return r;
+  }, Object.create(null));
+
+  const tableData: CategoryType[] = [];
+
+  for (const category in result) {
+    tableData.push({
+      title: category,
+      data: result[category],
+    });
+  }
+
   const renderItem = ({ item }: any) => {
+    const card = item as CardType;
     return (
-      <CellView onPress={() => {}}>
+      <CellView
+        onPress={() => {
+          navigation.navigate("CardScreen", {
+            card: card,
+          });
+        }}
+      >
         <Text
           style={{
             fontFamily: "Avenir",
-            fontSize: 20,
+            fontSize: 16,
             margin: 10,
             color: "#192a56",
           }}
         >
           {"  "}
-          <Ionicons name={item.icon} size={20} color={item.color} />
-          {"     " + item.title}
+          <Ionicons name={card.icon} size={20} />
+          {"     " + card.name}
         </Text>
       </CellView>
     );
@@ -81,7 +98,7 @@ export const GalleryScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <SectionList
-        sections={SAMPLE_DATA}
+        sections={tableData}
         renderItem={renderItem}
         renderSectionHeader={renderHeader}
         keyExtractor={(item) => item.key}
