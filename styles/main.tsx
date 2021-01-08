@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
   body: {
     fontSize: 15,
     fontFamily: "Avenir",
-    fontWeight: "500",
+    fontWeight: "400",
     marginVertical: 2,
     marginHorizontal: 20,
     color: THEME_DARK_TEXT,

@@ -21,8 +21,10 @@ export function CellView({ cell }: CellViewProps) {
   }
 
   // For each component, push the appropriate component.
-  cell.data.forEach((row) => {
-    components.push(<AutoRow row={row} handleAction={handleAction} />);
+  cell.data.forEach((row, index) => {
+    components.push(
+      <AutoRow row={row} key={"key" + index} handleAction={handleAction} />
+    );
   });
 
   // If the cell as a WHOLE has an action type, then wrap it.

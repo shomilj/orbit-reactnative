@@ -28,7 +28,7 @@ export const HomeScreen = ({ navigation }: any) => {
       const unsubscribe = firebase
         .firestore()
         .collection("users")
-        .doc("k9rfRy5bjKocVpKbRa7e")
+        .doc("9ZC0xKHcBKR4CXUWWhPKh7fHyEi2")
         .onSnapshot((doc) => {
           const document = doc.data();
           if (document) {
@@ -76,9 +76,9 @@ export const HomeScreen = ({ navigation }: any) => {
   // For index >= 1, render a CellView
   const renderItem = ({ item, index }: any) => {
     if (index == 0) {
-      return <NameCell name={"Shomil"} />;
+      return <NameCell name={"Shomil"} key="-1" />;
     } else {
-      return <CellView cell={item} key={"key" + index} />;
+      return <CellView cell={item} key={"key-" + index} />;
     }
   };
 
