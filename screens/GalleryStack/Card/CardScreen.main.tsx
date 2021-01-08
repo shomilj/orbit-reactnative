@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  Text,
-  SectionList,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-} from "react-native";
-import { CellView } from "../../../components/CellView";
-import PressableOpacity from "../../../components/PressableOpacity";
-import { ButtonRow } from "../../../components/rows/ButtonRow";
-import { THEME_DARK } from "../../../styles/main";
+import React, { useEffect } from "react";
+import { Text, SafeAreaView, View, TouchableOpacity } from "react-native";
+import { BackButton } from "../../../components/navigation/BackButton";
+import { styles, THEME_DARK } from "../../../styles/main";
 import { CardType } from "../Gallery/GalleryScreen.types";
-import { styles } from "./CardScreen.styles";
 
 const AddCardButton = (onPress: any) => {
   return (
@@ -46,22 +37,9 @@ export const CardScreen = ({ route, navigation }: any) => {
   const card: CardType = route.params.card;
 
   useEffect(() => {
-    const cancelButton = (
-      <PressableOpacity
-        style={{ marginLeft: 20 }}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={{ fontSize: 18, fontFamily: "Avenir", color: THEME_DARK }}>
-          Back
-        </Text>
-      </PressableOpacity>
-    );
-
     navigation.setOptions({
       title: "Gallery",
-      headerLeft: () => cancelButton,
+      headerLeft: () => <BackButton title="Back" navigation={navigation} />,
       headerTitleStyle: { fontSize: 17, fontFamily: "Avenir" },
     });
   }, []);

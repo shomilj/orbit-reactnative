@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 
-import { styles } from "./HomeScreen.styles";
-import { THEME_LIGHT } from "../../../styles/main";
+import { styles, THEME_LIGHT } from "../../../styles/main";
 
 import { CellView } from "../../../components/CellView";
 
@@ -10,35 +9,16 @@ import { AppBar } from "./AppBar";
 import { NameCell } from "./NameCell";
 
 import firebase from "firebase";
-import { RowModel } from "../Detail/Page/Table";
 import { SAMPLE_DATA } from "./HomeScreen.constants";
-
-interface UserObjectType {
-  first: string;
-  last: string;
-  email: string;
-  created: number;
-  cells: {}[];
-}
-
-export interface CellDataType {
-  cardKey: string;
-  data: RowModel[];
-  expires: number;
-  header: string;
-  sortIndex?: number;
-  params?: any;
-  actionType?: any;
-  actionContent?: any;
-}
+import { CellModelType, UserModelType } from "../../../models/main";
 
 const USE_SAMPLE_DATA = false;
 
 export const HomeScreen = ({ navigation }: any) => {
-  const [userObject, setUserObject] = useState<UserObjectType | undefined>(
+  const [userObject, setUserObject] = useState<UserModelType | undefined>(
     undefined
   );
-  const [cells, setCells] = useState<CellDataType[]>([]);
+  const [cells, setCells] = useState<CellModelType[]>([]);
 
   var user = firebase.auth().currentUser;
 
@@ -52,7 +32,7 @@ export const HomeScreen = ({ navigation }: any) => {
         .onSnapshot((doc) => {
           const document = doc.data();
           if (document) {
-            setUserObject(document as UserObjectType);
+            setUserObject(document as UserModelType);
           } else {
             console.log("Unable to get user document.");
           }
@@ -73,9 +53,8 @@ export const HomeScreen = ({ navigation }: any) => {
           .doc(cellId)
           .onSnapshot((doc) => {
             console.log("Cell updated:", cellId);
-            const cellData = doc.data();
-            if (cellData) {
-              const cell = cellData as CellDataType;
+            if (doc.exists) {
+              const cell = doc.data() as CellModelType;
               cell.sortIndex = sortOrder as number;
               setCells((cells) => [...cells, cell]);
             } else {
@@ -97,9 +76,9 @@ export const HomeScreen = ({ navigation }: any) => {
   // For index >= 1, render a CellView
   const renderItem = ({ item, index }: any) => {
     if (index == 0) {
-      return NameCell();
+      return <NameCell name={"Shomil"} />;
     } else {
-      return CellView(item, navigation, index);
+      return <CellView cell={item} key={"key" + index} />;
     }
   };
 

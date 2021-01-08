@@ -1,86 +1,55 @@
+import { useNavigation } from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { RowType } from "../screens/HomeStack/Detail/Page/Table";
-import { CellDataType } from "../screens/HomeStack/Home/HomeScreen.main";
-import { styles } from "../screens/HomeStack/Home/HomeScreen.styles";
-import { THEME_WHITE } from "../styles/main";
-import { ButtonRow, ButtonRowDataType } from "./rows/ButtonRow";
-import { TextRow } from "./rows/TextRow";
+import { Text, View } from "react-native";
+import { ActionEnum, CellModelType } from "../models/main";
+import { styles } from "../styles/main";
+import PressableOpacity from "./PressableOpacity";
+import { AutoRow } from "./rows/AutoRow";
 
-export interface RowDataType {
-  data: any;
-  type: RowType;
+interface CellViewProps {
+  cell: CellModelType;
 }
 
-export const CellView = (
-  cell: CellDataType,
-  navigation: any,
-  index: number = -1
-) => {
+export function CellView({ cell }: CellViewProps) {
+  const navigation = useNavigation();
   const components = [];
+
+  // If a header exists, push the header.
   if (cell.header) {
     components.push(<Text style={styles.header}>{cell.header}</Text>);
   }
-  if (cell.data) {
-    cell.data.forEach((row: RowDataType) => {
-      switch (row.type) {
-        case RowType.Text:
-          components.push(TextRow(row.data));
-          break;
-        case RowType.Button:
-          components.push(
-            ButtonRow(row.data as ButtonRowDataType, handleAction, navigation)
-          );
-          break;
-      }
-    });
-  }
-  const cellView = (
-    <View
-      style={{
-        ...styles.cell,
-        paddingVertical: 6,
-        backgroundColor: THEME_WHITE,
-      }}
-      key={"key-" + index}
-    >
-      {components}
-    </View>
-  );
 
+  // For each component, push the appropriate component.
+  cell.data.forEach((row) => {
+    components.push(<AutoRow row={row} handleAction={handleAction} />);
+  });
+
+  // If the cell as a WHOLE has an action type, then wrap it.
   if (cell.actionType) {
+    const onPress = () => {
+      handleAction(cell.actionType, cell.actionContent, navigation);
+    };
     return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          handleAction(cell.actionType, cell.actionContent, navigation);
-        }}
-        key={"key-" + index}
-      >
-        {cellView}
-      </TouchableOpacity>
+      <PressableOpacity onPress={onPress} style={styles.cell}>
+        {components}
+      </PressableOpacity>
     );
   } else {
-    return cellView;
+    return <View style={styles.cell}>{components}</View>;
   }
-};
-
-export enum ActionType {
-  Web = "WEB",
-  Detail = "DETAIL",
 }
 
 export const handleAction = (
-  actionType: ActionType,
+  actionType: ActionEnum,
   actionContent: any,
   navigation: any
 ) => {
   switch (actionType) {
-    case ActionType.Web:
+    case ActionEnum.Web:
       WebBrowser.openBrowserAsync(actionContent);
       break;
-    case ActionType.Detail:
+    case ActionEnum.Detail:
       navigation.navigate("DetailScreen", {
         nodeId: actionContent,
       });

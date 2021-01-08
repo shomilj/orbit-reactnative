@@ -1,7 +1,8 @@
 import React from "react";
 import { Text } from "react-native";
-import { StyleMap } from "../../screens/HomeStack/Home/HomeScreen.styles";
+import { TextRowModelType } from "../../models/main";
+import { StyleMap } from "../../styles/main";
 
-export const TextRow = (data: any) => {
-  return <Text style={StyleMap(data.style)}>{data.content}</Text>;
-};
+export function TextRow({ style, content }: TextRowModelType) {
+  return <Text style={StyleMap(style)}>{content}</Text>;
+}

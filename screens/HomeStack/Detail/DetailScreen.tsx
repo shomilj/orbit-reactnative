@@ -2,19 +2,16 @@ import firebase from "firebase";
 import "firebase/firestore";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Text, View } from "react-native";
+import { BackButton } from "../../../components/navigation/BackButton";
+import {
+  MapDataType,
+  NodeType,
+  PageEnum,
+  TableDataType,
+} from "../../../models/main";
 import { styles, THEME_DARK, THEME_LIGHT } from "../../../styles/main";
-import { MapDataType, MapFeature } from "./Page/Map";
-import { TableDataType, TableFeature } from "./Page/Table";
-
-enum PageType {
-  Map = "MAP",
-  Table = "TABLE",
-}
-
-interface NodeType {
-  type: PageType;
-  data: MapDataType | TableDataType;
-}
+import { MapFeature } from "./Page/Map";
+import { TableFeature } from "./Page/Table";
 
 export const DetailScreen = ({ route, navigation }: any) => {
   const [node, setNode] = useState<NodeType | undefined>(undefined);
@@ -23,13 +20,13 @@ export const DetailScreen = ({ route, navigation }: any) => {
   const { nodeId } = route.params;
 
   // Style the navigation bar.
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
-      headerTintColor: THEME_DARK,
-      headerTitleStyle: { fontFamily: "Avenir", color: THEME_DARK },
-      headerStyle: { backgroundColor: THEME_LIGHT },
+      title: "",
+      headerLeft: () => <BackButton title="Back" navigation={navigation} />,
+      headerTitleStyle: styles.navigationTitle,
     });
-  }, [navigation]);
+  }, []);
 
   // Start an observer for this node.
   useEffect(() => {
@@ -62,15 +59,15 @@ export const DetailScreen = ({ route, navigation }: any) => {
   } else if (node) {
     // Otherwise, figure out which feature to inflate.
     switch (node.type) {
-      case PageType.Map:
-        return MapFeature(node.data as MapDataType);
-      case PageType.Table:
-        return TableFeature(node.data as TableDataType, navigation);
+      case PageEnum.Map:
+        return <MapFeature data={node.data as MapDataType} />;
+      case PageEnum.Table:
+        return <TableFeature data={node.data as TableDataType} />;
       default:
-        return <View></View>;
+        return <View />;
     }
   } else {
     // We might want to show a loading indicator here...
-    return <View></View>;
+    return <View />;
   }
 };

@@ -2,8 +2,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, Text } from "react-native";
 import React from "react";
 import PressableOpacity from "../../components/PressableOpacity";
-import { styles } from "./AuthScreen.styles";
+
 import firebase from "firebase";
+import { styles } from "./AuthScreen.styles";
 
 const logo = require("../../assets/icon.png");
 

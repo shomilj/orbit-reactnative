@@ -10,7 +10,7 @@ export type MainStackParamList = {
 
 const MainStack = createStackNavigator<MainStackParamList>();
 
-export const MainStackScreen = () => {
+export function MainStackScreen() {
   return (
     <MainStack.Navigator initialRouteName="HomeScreen">
       <MainStack.Screen
@@ -29,4 +29,4 @@ export const MainStackScreen = () => {
       />
     </MainStack.Navigator>
   );
-};
+}

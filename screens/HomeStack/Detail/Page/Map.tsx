@@ -1,29 +1,37 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
+import { MapDataType } from "../../../../models/main";
 
-interface MapLocation {
-  title: string;
-  subtitle: string;
-  latitude: number;
-  longitude: number;
-  icon: string;
-  color: string;
-}
+const styles = StyleSheet.create({
+  mapContainer: { flex: 1 },
+});
 
-export type MapDataType = MapLocation[];
-
-const getIonicon = (icon: any, color: string) => {
-  return (
-    <View style={{ borderRadius: 100, backgroundColor: color }}>
-      <Ionicons name={icon} size={15} style={{ margin: 5 }} color={"white"} />
-    </View>
-  );
+const defaultRegion = {
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
 };
 
-export const MapFeature = (data: MapDataType) => {
-  const markers = data.map((location, index) => (
+interface MapFeatureProps {
+  data: MapDataType;
+  initialRegion?: any;
+}
+
+export function MapFeature({ data, initialRegion }: MapFeatureProps) {
+  const { locations, region } = data;
+  const mapRegion = region || defaultRegion;
+  const getIonicon = (icon: any, color: string) => {
+    return (
+      <View style={{ borderRadius: 100, backgroundColor: color }}>
+        <Ionicons name={icon} size={15} style={{ margin: 5 }} color={"white"} />
+      </View>
+    );
+  };
+
+  const markers = locations.map((location, index) => (
     <Marker
       key={index}
       coordinate={{
@@ -38,15 +46,13 @@ export const MapFeature = (data: MapDataType) => {
     </Marker>
   ));
 
+  const onRegionChangeComplete = (region: any) => {};
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.mapContainer}>
       <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        initialRegion={mapRegion}
+        onRegionChangeComplete={onRegionChangeComplete}
         style={{
           width: "100%",
           height: "100%",
@@ -56,4 +62,4 @@ export const MapFeature = (data: MapDataType) => {
       </MapView>
     </View>
   );
-};
+}

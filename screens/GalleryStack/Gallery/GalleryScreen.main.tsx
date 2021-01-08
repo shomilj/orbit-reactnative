@@ -1,38 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { Text, SectionList, SafeAreaView, Button, View } from "react-native";
+import { Text, SectionList, SafeAreaView, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { SAMPLE_DATA } from "./GalleryScreen.constants";
-import { styles } from "./GalleryScreen.styles";
-import { CellView } from "./components/CellView";
-import { HeaderView } from "./components/HeaderView";
 import firebase from "firebase";
 import "firebase/firestore";
 import { CardType, CategoryType } from "./GalleryScreen.types";
 import PressableOpacity from "../../../components/PressableOpacity";
-import { THEME_DARK } from "../../../styles/main";
+import {
+  styles as mainStyles,
+  THEME_DARK,
+  THEME_LIGHT,
+} from "../../../styles/main";
+import { BackButton } from "../../../components/navigation/BackButton";
+
+const styles = StyleSheet.create({
+  ...mainStyles,
+  galleryCell: {
+    ...mainStyles.cell,
+    paddingVertical: 6,
+    display: "flex",
+    justifyContent: "center",
+  },
+  galleryCellText: {
+    fontFamily: "Avenir",
+    fontSize: 16,
+    margin: 10,
+    color: "#192a56",
+  },
+  galleryHeaderView: {
+    marginLeft: 30,
+    marginTop: 30,
+    marginBottom: 10,
+    fontFamily: "Avenir",
+    fontSize: 20,
+    fontWeight: "800",
+    textDecorationLine: "underline",
+  },
+});
 
 export const GalleryScreen = ({ navigation }: any) => {
   const [cards, setCards] = useState<CardType[] | undefined>(undefined);
 
   useEffect(() => {
-    const cancelButton = (
-      <PressableOpacity
-        style={{ marginLeft: 20 }}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={{ fontSize: 18, fontFamily: "Avenir", color: THEME_DARK }}>
-          Cancel
-        </Text>
-      </PressableOpacity>
-    );
-
     navigation.setOptions({
-      title: "Gallery",
-      headerLeft: () => cancelButton,
-      headerTitleStyle: { fontSize: 17, fontFamily: "Avenir" },
+      title: "",
+      headerLeft: () => <BackButton title="Cancel" navigation={navigation} />,
+      headerTitleStyle: styles.navigationTitle,
+      headerStyle: {
+        backgroundColor: THEME_LIGHT,
+      },
     });
   }, []);
 
@@ -50,6 +66,7 @@ export const GalleryScreen = ({ navigation }: any) => {
     return unsubscribe;
   }, [setCards]);
 
+  // Convert the result into table data.
   const result = cards?.reduce((r, a) => {
     r[a.category] = r[a.category] || [];
     r[a.category].push(a);
@@ -65,38 +82,41 @@ export const GalleryScreen = ({ navigation }: any) => {
     });
   }
 
+  // Renders a row.
   const renderItem = ({ item }: any) => {
     const card = item as CardType;
+    const onPress = () => {
+      navigation.navigate("CardScreen", {
+        card: card,
+      });
+    };
     return (
-      <CellView
-        onPress={() => {
-          navigation.navigate("CardScreen", {
-            card: card,
-          });
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "Avenir",
-            fontSize: 16,
-            margin: 10,
-            color: "#192a56",
-          }}
-        >
-          {"  "}
-          <Ionicons name={card.icon} size={20} />
+      <PressableOpacity onPress={onPress} style={styles.galleryCell}>
+        <Text style={styles.galleryCellText}>
+          <Ionicons name={card.icon} size={20} color={THEME_DARK} />
           {"     " + card.name}
         </Text>
-      </CellView>
+      </PressableOpacity>
     );
   };
 
+  // Renders a header.
   const renderHeader = ({ section: { title, color } }: any) => {
-    return <HeaderView title={title} color={color} />;
+    return (
+      <Text
+        style={{
+          ...styles.galleryHeaderView,
+          textDecorationColor: color,
+          color: color,
+        }}
+      >
+        {title}
+      </Text>
+    );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: THEME_LIGHT }}>
       <SectionList
         sections={tableData}
         renderItem={renderItem}
