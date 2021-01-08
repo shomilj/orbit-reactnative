@@ -26,12 +26,20 @@ export interface CellModelType {
 
 export interface RowModelType {
   type: RowEnum;
-  data: TextRowModelType | ButtonRowModelType;
+  data: TextRowModelType | ButtonRowModelType | DateRowModelType;
 }
 
 export enum RowEnum {
   Text = "TEXT",
   Button = "BUTTON",
+  Date = "DATE",
+}
+
+export interface DateRowModelType {
+  style: string;
+  content: number;
+  format: string;
+  prefix?: string;
 }
 
 export interface TextRowModelType {

@@ -33,12 +33,20 @@ export function CellView({ cell }: CellViewProps) {
       handleAction(cell.actionType, cell.actionContent, navigation);
     };
     return (
-      <PressableOpacity onPress={onPress} style={styles.cell}>
+      <PressableOpacity
+        onPress={onPress}
+        style={styles.cell}
+        key={cell.cardKey}
+      >
         {components}
       </PressableOpacity>
     );
   } else {
-    return <View style={styles.cell}>{components}</View>;
+    return (
+      <View style={styles.cell} key={cell.cardKey}>
+        {components}
+      </View>
+    );
   }
 }
 

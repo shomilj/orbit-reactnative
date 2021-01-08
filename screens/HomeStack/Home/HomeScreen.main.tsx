@@ -76,7 +76,7 @@ export const HomeScreen = ({ navigation }: any) => {
   // For index >= 1, render a CellView
   const renderItem = ({ item, index }: any) => {
     if (index == 0) {
-      return <NameCell name={"Shomil"} key="-1" />;
+      return <NameCell name={"Shomil"} />;
     } else {
       return <CellView cell={item} key={"key-" + index} />;
     }
