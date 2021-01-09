@@ -17,7 +17,11 @@ export function CellView({ cell }: CellViewProps) {
 
   // If a header exists, push the header.
   if (cell.header) {
-    components.push(<Text style={styles.header}>{cell.header}</Text>);
+    components.push(
+      <Text style={styles.header} key={"row0"}>
+        {cell.header}
+      </Text>
+    );
   }
 
   // For each component, push the appropriate component.
@@ -28,26 +32,17 @@ export function CellView({ cell }: CellViewProps) {
   });
 
   // If the cell as a WHOLE has an action type, then wrap it.
+  let onPress = null;
   if (cell.actionType) {
-    const onPress = () => {
+    onPress = () => {
       handleAction(cell.actionType, cell.actionContent, navigation);
     };
-    return (
-      <PressableOpacity
-        onPress={onPress}
-        style={styles.cell}
-        key={cell.cardKey}
-      >
-        {components}
-      </PressableOpacity>
-    );
-  } else {
-    return (
-      <View style={styles.cell} key={cell.cardKey}>
-        {components}
-      </View>
-    );
   }
+  return (
+    <PressableOpacity onPress={onPress} style={styles.cell} key={cell.cardKey}>
+      {components}
+    </PressableOpacity>
+  );
 }
 
 export const handleAction = (

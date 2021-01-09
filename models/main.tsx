@@ -5,7 +5,7 @@ export interface UserModelType {
   last: string;
   email: string;
   created: number;
-  cells: {}[];
+  cells: string[];
 }
 
 // ------------ CELLS ----------------
@@ -22,6 +22,7 @@ export interface CellModelType {
   params?: any;
   actionType?: any;
   actionContent?: any;
+  documentId?: string;
 }
 
 export interface RowModelType {

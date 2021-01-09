@@ -42,6 +42,7 @@ export const SAMPLE_DATA = [
 
   {
     id: "5",
+    documentId: "ffff",
     header: "UC BERKELEY COVID CASES",
     data: [
       {
@@ -79,6 +80,7 @@ export const SAMPLE_DATA = [
   },
   {
     id: "5",
+    documentId: "ffff",
     header: "Trending on r/Berkeley",
     data: [
       {
@@ -125,6 +127,7 @@ export const SAMPLE_DATA = [
   },
   {
     id: "5",
+    documentId: "ffff",
     header: "Upcoming Games (Men's Basketball)",
     data: [
       {
@@ -159,6 +162,7 @@ export const SAMPLE_DATA = [
   },
   {
     id: "5",
+    documentId: "ffff",
     header: "The Daily Californian",
     data: [
       {
@@ -232,6 +236,7 @@ export const SAMPLE_DATA = [
   },
   {
     id: "1",
+    documentId: "ffff",
     header: "SPRING BREAK COUNTDOWN",
     data: [
       {
@@ -245,6 +250,7 @@ export const SAMPLE_DATA = [
   },
   {
     id: "4",
+    documentId: "ffff",
     header: "CAFE 3 MENU - BREAKFAST (10/11)",
     data: [
       {
@@ -295,6 +301,7 @@ export const SAMPLE_DATA = [
 
   {
     id: "5",
+    documentId: "ffff",
     header: "Getting Around Campus",
     data: [
       {
@@ -334,6 +341,7 @@ export const SAMPLE_DATA = [
 
   {
     id: "5",
+    documentId: "ffff",
     header: "CS 61C Office Hour Queue",
     data: [
       {

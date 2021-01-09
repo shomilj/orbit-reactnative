@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView } from "react-native";
-
 import { styles, THEME_LIGHT } from "../../../styles/main";
-
 import { CellView } from "../../../components/CellView";
-
 import { AppBar } from "./AppBar";
 import { NameCell } from "./NameCell";
-
 import firebase from "firebase";
 import { SAMPLE_DATA } from "./HomeScreen.constants";
 import { CellModelType, UserModelType } from "../../../models/main";
@@ -18,13 +14,12 @@ export const HomeScreen = ({ navigation }: any) => {
   const [userObject, setUserObject] = useState<UserModelType | undefined>(
     undefined
   );
-  const [cells, setCells] = useState<CellModelType[]>([]);
+  const [cells, setCells] = useState<Record<string, CellModelType>>({});
 
   var user = firebase.auth().currentUser;
 
   useEffect(() => {
     if (user && !USE_SAMPLE_DATA) {
-      console.log("Observing data for user:", user.uid);
       const unsubscribe = firebase
         .firestore()
         .collection("users")
@@ -45,8 +40,8 @@ export const HomeScreen = ({ navigation }: any) => {
     // If the user object updates, then activate the cellular listeners.
     if (userObject && !USE_SAMPLE_DATA) {
       const unsubscribers: { (): void }[] = [];
-      setCells([]);
-      for (const [cellId, sortOrder] of Object.entries(userObject.cells)) {
+      for (let i = 0; i < userObject.cells.length; i++) {
+        const cellId = userObject.cells[i];
         const unsubscribe = firebase
           .firestore()
           .collection("cells")
@@ -55,8 +50,12 @@ export const HomeScreen = ({ navigation }: any) => {
             console.log("Cell updated:", cellId);
             if (doc.exists) {
               const cell = doc.data() as CellModelType;
-              cell.sortIndex = sortOrder as number;
-              setCells((cells) => [...cells, cell]);
+              cell.sortIndex = i as number;
+              cell.documentId = doc.id;
+              setCells((prevState) => ({
+                ...prevState,
+                [doc.id]: cell,
+              }));
             } else {
               console.log("Unable to get cell data for cell", cellId);
             }
@@ -85,13 +84,9 @@ export const HomeScreen = ({ navigation }: any) => {
   var tableData = [];
   tableData.push({});
   if (cells) {
-    var sortedCells = [...cells];
-    sortedCells.sort();
-    sortedCells.forEach((cell) => {
-      if (cell) {
-        tableData.push(cell);
-      } else {
-        console.log("other error");
+    userObject?.cells.forEach((docId) => {
+      if (cells[docId]) {
+        tableData.push(cells[docId]);
       }
     });
   }
@@ -102,12 +97,16 @@ export const HomeScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: THEME_LIGHT }}>
-      <AppBar navigation={navigation} />
+      <AppBar
+        navigation={navigation}
+        cells={cells}
+        sortOrder={userObject?.cells}
+      />
       <FlatList
         data={tableData}
         renderItem={renderItem}
-        keyExtractor={(_, index) => {
-          return "key-" + index;
+        keyExtractor={(item, index) => {
+          return "item-" + item.documentId;
         }}
       />
     </SafeAreaView>

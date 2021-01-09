@@ -18,11 +18,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export const AppBar = ({ navigation }: any) => {
-  const onPress = () => navigation.navigate("GalleryStackScreen");
+export const AppBar = ({ navigation, cells, sortOrder }: any) => {
+  const goToOrder = () => navigation.navigate("OrderScreen", {
+    cellParam: cells,
+    sortOrder: sortOrder
+  });
+  const goToGallery = () => navigation.navigate("GalleryStackScreen");
   return (
     <View style={styles.barView}>
-      <PressableOpacity style={styles.barButton} onPress={onPress}>
+      <PressableOpacity style={styles.barButton} onPress={goToOrder}>
+        <Ionicons name="reorder-three-outline" size={32} color={THEME_DARK} />
+      </PressableOpacity>
+
+      <PressableOpacity style={styles.barButton} onPress={goToGallery}>
         <Ionicons name="md-add-circle-outline" size={32} color={THEME_DARK} />
       </PressableOpacity>
     </View>

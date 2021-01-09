@@ -12,7 +12,7 @@ const MainStack = createStackNavigator<MainStackParamList>();
 
 export function MainStackScreen() {
   return (
-    <MainStack.Navigator initialRouteName="HomeScreen">
+    <MainStack.Navigator initialRouteName="HomeScreen" screenOptions={{headerShown: false}}>
       <MainStack.Screen
         name="HomeScreen"
         component={HomeScreen}
