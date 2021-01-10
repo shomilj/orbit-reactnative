@@ -5,7 +5,12 @@ import { THEME_DARK } from "../../styles/main";
 
 const styles = StyleSheet.create({
   buttonView: { marginLeft: 20, marginRight: 20 },
-  buttonTitle: { fontSize: 18, fontFamily: "Avenir", color: THEME_DARK },
+  buttonTitle: {
+    fontSize: 18,
+    fontFamily: "Avenir",
+    color: THEME_DARK,
+    fontWeight: "600",
+  },
 });
 
 interface BackButtonProps {

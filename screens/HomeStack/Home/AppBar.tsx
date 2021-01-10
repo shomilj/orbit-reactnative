@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 20,
   },
+  leftBarButton: {
+    marginTop: 10,
+    marginLeft: 20,
+    marginRight: "auto"
+  }
 });
 
 export const AppBar = ({ navigation, cells, sortOrder }: any) => {
@@ -26,8 +31,8 @@ export const AppBar = ({ navigation, cells, sortOrder }: any) => {
   const goToGallery = () => navigation.navigate("GalleryStackScreen");
   return (
     <View style={styles.barView}>
-      <PressableOpacity style={styles.barButton} onPress={goToOrder}>
-        <Ionicons name="reorder-three-outline" size={32} color={THEME_DARK} />
+      <PressableOpacity style={styles.leftBarButton} onPress={goToOrder}>
+        <Ionicons name="cog-outline" size={32} color={THEME_DARK} />
       </PressableOpacity>
 
       <PressableOpacity style={styles.barButton} onPress={goToGallery}>

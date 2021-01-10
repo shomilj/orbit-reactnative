@@ -17,6 +17,7 @@ import {
   THEME_LIGHT,
 } from "../../../styles/main";
 import { Ionicons } from "@expo/vector-icons";
+import { BarButton } from "../../../components/navigation/BarButton";
 
 type OrderMapType = Record<string, number>;
 
@@ -61,11 +62,32 @@ export function OrderScreen({ navigation, route }: ReorderScreenProps) {
       title: "",
       headerShown: true,
       headerLeft: () => (
-        <ActivityIndicator
-          animating={loading}
-          color={THEME_DARK}
-          style={{ paddingLeft: 20 }}
+        <BarButton
+          title="Log Out"
+          color="red"
+          onPress={() => {
+            setLoading(true);
+            firebase
+              .auth()
+              .signOut()
+              .then(() => {
+                setLoading(false);
+              })
+              .catch((error) => {
+                setLoading(false);
+                console.log("Failed to log user out:", error);
+              });
+          }}
         />
+      ),
+      headerTitle: () => (
+        <>
+          <ActivityIndicator
+            animating={loading}
+            color={THEME_DARK}
+            style={{ paddingLeft: 20 }}
+          />
+        </>
       ),
       headerRight: () => <BackButton title="Done" navigation={navigation} />,
       headerTitleStyle: styles.navigationTitle,
@@ -155,11 +177,7 @@ export function OrderScreen({ navigation, route }: ReorderScreenProps) {
             style={{ marginHorizontal: 2 }}
             onPress={deletePressed}
           >
-            <Ionicons
-              name="close-circle-outline"
-              size={30}
-              color={THEME_DARK}
-            />
+            <Ionicons name="close-circle-outline" size={30} color="red" />
           </PressableOpacity>
         </Text>
       </View>
@@ -167,7 +185,7 @@ export function OrderScreen({ navigation, route }: ReorderScreenProps) {
   };
 
   let tableData: CellModelType[] = [];
-  if (cells) {
+  if (cells && order) {
     order.forEach((docId) => {
       if (cells[docId]) {
         tableData.push(cells[docId]);
@@ -175,29 +193,11 @@ export function OrderScreen({ navigation, route }: ReorderScreenProps) {
     });
   }
 
-  // const updateOrder = () => {
-  //   let cellOrder: Record<string, number> = {};
-  //   cells.forEach((row, index) => {
-  //     cellOrder[row.documentId || ""] = index;
-  //   });
-  //   setOrder(cellOrder);
-  //   const db = firebase.firestore();
-  //   const uid = firebase.auth().currentUser?.uid;
-  //   if (uid) {
-  //     db.collection("users").doc(uid).set(
-  //       {
-  //         cells: cellOrder,
-  //       },
-  //       { merge: true }
-  //     );
-  //   }
-  // };
-
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: THEME_LIGHT }}>
       <Text style={{ ...styles.header, textAlign: "center", marginTop: 20 }}>
-        Drag the cards in the order you'd like them to show up on your home
-        screen.
+        Use the up and down arrows to configure the order in which you'd like to
+        see your cards!
       </Text>
       <FlatList
         data={tableData}

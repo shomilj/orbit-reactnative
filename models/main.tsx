@@ -1,9 +1,7 @@
 // This file defines data models.
 
 export interface UserModelType {
-  first: string;
-  last: string;
-  email: string;
+  name: string;
   created: number;
   cells: string[];
 }

@@ -109,6 +109,21 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     color: THEME_GRAY,
   },
+  buttonView: {
+    borderRadius: 16,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    justifyContent: "center",
+    backgroundColor: THEME_DARK,
+  },
+  buttonText: {
+    fontFamily: "Avenir",
+    fontSize: 14,
+    fontWeight: "400",
+    marginVertical: 6,
+    color: "white",
+    textAlign: "center",
+  },
 });
 
 export function StyleMap(style: string) {

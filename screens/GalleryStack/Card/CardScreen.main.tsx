@@ -171,7 +171,7 @@ export function CardScreen({ route, navigation }: CardScreenProps) {
         setLoading(false);
         if (data.error) {
           setError("An unknown error occurred.");
-          console.log("Erorr in fetch:", data.error);
+          console.log("Error in fetch:", data.error);
         } else {
           navigation.navigate("HomeScreen");
         }

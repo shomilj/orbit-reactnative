@@ -16,14 +16,13 @@ export const HomeScreen = ({ navigation }: any) => {
   );
   const [cells, setCells] = useState<Record<string, CellModelType>>({});
 
-  var user = firebase.auth().currentUser;
-
+  const userId = firebase.auth().currentUser?.uid;
   useEffect(() => {
-    if (user && !USE_SAMPLE_DATA) {
+    if (firebase.auth().currentUser) {
       const unsubscribe = firebase
         .firestore()
         .collection("users")
-        .doc("9ZC0xKHcBKR4CXUWWhPKh7fHyEi2")
+        .doc(userId)
         .onSnapshot((doc) => {
           const document = doc.data();
           if (document) {
@@ -34,7 +33,15 @@ export const HomeScreen = ({ navigation }: any) => {
         });
       return unsubscribe;
     }
-  }, [setUserObject, user]);
+  }, [setUserObject, userId]);
+
+  useEffect(() => {
+    if (firebase.auth().currentUser?.uid && !userObject) {
+      // A user is signed in, but the user object does not exist.
+      // Ask them for their name; when they enter their name, write to the user object.
+      navigation.navigate("NameScreen");
+    }
+  }, [userId, userObject]);
 
   useEffect(() => {
     // If the user object updates, then activate the cellular listeners.
@@ -75,7 +82,7 @@ export const HomeScreen = ({ navigation }: any) => {
   // For index >= 1, render a CellView
   const renderItem = ({ item, index }: any) => {
     if (index == 0) {
-      return <NameCell name={"Shomil"} />;
+      return <NameCell name={userObject?.name} navigation={navigation} />;
     } else {
       return <CellView cell={item} key={"key-" + index} />;
     }
