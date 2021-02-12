@@ -50,9 +50,7 @@ export function NameScreen({ navigation }: NameScreenProps) {
     navigation.setOptions({
       title: "",
       headerShown: true,
-      headerLeft: () => (
-        <BarButton title="Cancel" color="red" onPress={navigation.goBack} />
-      ),
+      headerLeft: null,
       headerTitle: () => (
         <>
           <ActivityIndicator

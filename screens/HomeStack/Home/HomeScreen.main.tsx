@@ -12,6 +12,7 @@ import { ORBIT_UPDATE_USER_API } from "../../../Constants";
 const USE_SAMPLE_DATA = false;
 
 export const HomeScreen = ({ navigation }: any) => {
+  const [doneLoading, setDoneLoading] = useState(false);
   const [userObject, setUserObject] = useState<UserModelType | undefined>(
     undefined
   );
@@ -31,6 +32,7 @@ export const HomeScreen = ({ navigation }: any) => {
           } else {
             console.log("Unable to get user document.");
           }
+          setDoneLoading(true);
         });
       return unsubscribe;
     }
@@ -64,6 +66,12 @@ export const HomeScreen = ({ navigation }: any) => {
         });
     }
   }, [userId, userObject]);
+
+  useEffect(() => {
+    if (doneLoading && !userObject?.name) {
+      navigation.navigate("NameScreen");
+    }
+  }, [userObject, doneLoading]);
 
   useEffect(() => {
     // If the user object updates, then activate the cellular listeners.
