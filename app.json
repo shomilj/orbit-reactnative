@@ -17,7 +17,13 @@
     "ios": {
       "bundleIdentifier": "dev.mdb.newbearcentral",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.944579165785-b6smvfpqa440rsotpl51oqr1c1lqd32d"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "dev.mdb.newbearcentral",
@@ -25,7 +31,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

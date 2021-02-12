@@ -40,7 +40,9 @@ interface NameScreenProps {
 }
 
 export function NameScreen({ navigation }: NameScreenProps) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(
+    firebase.auth().currentUser?.displayName || ""
+  );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -72,6 +74,9 @@ export function NameScreen({ navigation }: NameScreenProps) {
     if (name.trim() == "") {
       setError("Please enter a name.");
     } else {
+      firebase.auth().currentUser?.updateProfile({
+        displayName: name,
+      });
       writeUser()
         .then(() => {})
         .catch((error) => {
@@ -118,6 +123,7 @@ export function NameScreen({ navigation }: NameScreenProps) {
       <TextInput
         placeholder="tap to enter"
         onChangeText={setName}
+        value={name}
         style={styles.nameInput}
       ></TextInput>
       <Text style={{ ...styles.h5, textAlign: "center", color: "red" }}>

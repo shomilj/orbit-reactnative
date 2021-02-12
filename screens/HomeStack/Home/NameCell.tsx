@@ -38,18 +38,6 @@ export function NameCell({ name, navigation }: NameCellProps) {
       </View>
     );
   } else {
-    return (
-      <View
-        key={"random"}
-        style={{ ...styles.cell, backgroundColor: THEME_LIGHT }}
-      >
-        <Text style={styles.h1}>{greeting}.</Text>
-        <PressableOpacity onPress={goToName}>
-          <Text style={styles.h5}>
-            We don't know your name! Tap here to tell us.
-          </Text>
-        </PressableOpacity>
-      </View>
-    );
+    return <View></View>;
   }
 }

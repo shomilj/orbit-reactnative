@@ -7,6 +7,7 @@ import { NameCell } from "./NameCell";
 import firebase from "firebase";
 import { SAMPLE_DATA } from "./HomeScreen.constants";
 import { CellModelType, UserModelType } from "../../../models/main";
+import { ORBIT_UPDATE_USER_API } from "../../../Constants";
 
 const USE_SAMPLE_DATA = false;
 
@@ -38,8 +39,29 @@ export const HomeScreen = ({ navigation }: any) => {
   useEffect(() => {
     if (firebase.auth().currentUser?.uid && !userObject) {
       // A user is signed in, but the user object does not exist.
-      // Ask them for their name; when they enter their name, write to the user object.
-      navigation.navigate("NameScreen");
+      // Create the user object!
+      // Call the cloud function with their name (logic handled in cloud).
+      fetch(ORBIT_UPDATE_USER_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: firebase.auth().currentUser?.uid,
+          name: firebase.auth().currentUser?.displayName,
+        }),
+      })
+        .then((result) => result.json())
+        .then((response) => {
+          if (response.error) {
+            console.log("updateUserError: ", response.error);
+          } else {
+            console.log("successfully updated user");
+          }
+        })
+        .catch((error) => {
+          console.log("updateUserError: ", error);
+        });
     }
   }, [userId, userObject]);
 
