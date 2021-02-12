@@ -10,25 +10,20 @@ if (firebase.apps.length == 0) {
 }
 
 export function EntryStackScreen() {
-  const [signedIn, setSignedIn] = useState(-1);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<firebase.User | null>(null);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        var uid = user.uid;
-        console.log("User signed in with UID:", uid);
-        setSignedIn(1);
-      } else {
-        console.log("User is signed out.");
-        setSignedIn(0);
-      }
+      setUser(user);
+      if (initializing) setInitializing(false);
     });
     return unsubscribe;
-  }, [setSignedIn]);
+  }, [setUser]);
 
-  if (signedIn == -1) {
+  if (initializing) {
     return <View />;
-  } else if (signedIn == 0) {
+  } else if (!user) {
     return AuthStackScreen();
   } else {
     return RootStackScreen();
