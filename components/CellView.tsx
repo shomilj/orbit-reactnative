@@ -55,7 +55,7 @@ export const handleAction = (
       WebBrowser.openBrowserAsync(actionContent);
       break;
     case ActionEnum.Detail:
-      navigation.navigate("DetailScreen", {
+      navigation.push("DetailScreen", {
         nodeId: actionContent,
       });
       break;
