@@ -6,6 +6,7 @@ import { ActionEnum, CellModelType } from "../models/main";
 import { styles } from "../styles/main";
 import PressableOpacity from "./PressableOpacity";
 import { AutoRow } from "./rows/AutoRow";
+import * as Analytics from "expo-firebase-analytics";
 
 interface CellViewProps {
   cell: CellModelType;
@@ -50,6 +51,10 @@ export const handleAction = (
   actionContent: any,
   navigation: any
 ) => {
+  Analytics.logEvent("handle_action", {
+    actionType: actionType || "UNKNOWN",
+    actionContent: actionContent?.substring(0, 35) || "UNKNOWN",
+  });
   switch (actionType) {
     case ActionEnum.Web:
       WebBrowser.openBrowserAsync(actionContent);

@@ -16,6 +16,7 @@
     "expo": "~40.0.0",
     "expo-apple-authentication": "~2.2.2",
     "expo-crypto": "~8.4.0",
+    "expo-firebase-analytics": "~2.6.0",
     "expo-google-app-auth": "^8.1.4",
     "expo-status-bar": "~1.0.3",
     "expo-web-browser": "~8.6.0",
