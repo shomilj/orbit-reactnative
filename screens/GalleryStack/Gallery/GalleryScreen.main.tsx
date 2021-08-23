@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, SectionList, SafeAreaView, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import * as WebBrowser from "expo-web-browser";
 
 import firebase from "firebase";
 import "firebase/firestore";
@@ -12,6 +13,7 @@ import {
   THEME_LIGHT,
 } from "../../../styles/main";
 import { BackButton } from "../../../components/navigation/BackButton";
+import { BarButton } from "../../../components/navigation/BarButton";
 
 const styles = StyleSheet.create({
   ...mainStyles,
@@ -49,21 +51,23 @@ export const GalleryScreen = ({ navigation }: any) => {
       headerStyle: {
         backgroundColor: THEME_LIGHT,
       },
+      headerRight: () => <BarButton title="Request a Card" color="gray" onPress={() => {
+        WebBrowser.openBrowserAsync("https://airtable.com/shrw1Q7u9n0oDEhmh");
+      }} />
     });
   }, []);
 
   useEffect(() => {
-    const unsubscribe = firebase
+    return firebase
       .firestore()
       .collection("cards")
       .onSnapshot((querySnapshot) => {
-        const cards: CardType[] = [];
+        const newCards: CardType[] = [];
         querySnapshot.forEach((doc) => {
-          cards.push(doc.data() as CardType);
+          newCards.push(doc.data() as CardType);
         });
-        setCards(cards);
+        setCards(newCards);
       });
-    return unsubscribe;
   }, [setCards]);
 
   // Convert the result into table data.
